@@ -57,13 +57,25 @@
 </head>
 <body>
     
+     <nav>
+        <a href="index.php" class="active">รายการเข้าพัก</a>
+        <a href="room.php">ห้องพัก</a>
+        <a href="manage_order.php">จัดการเข้าพัก</a>
+        </nav>
+
 <?php
         include "action/connect.php";
+        // Report all PHP errors
+error_reporting(E_ALL);
+
+// Force errors to be displayed on the screen
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
         //      ดึง    ทั้งหมด จาก  ตารางorders
         $sql = "SELECT * FROM rooms";
                 //              db.   คำสั่ง
-        $result = mysqli_query($con, $sql);git init
+        $result = mysqli_query($con, $sql);
         //ทดสอบ
         //var_dump($result);
     ?>
@@ -91,6 +103,6 @@
             }
         ?>
     </table>    
-    <a href="index.php">กลับหน้าorders</a>
+    <a href="index.php">Back orders</a>
 </body>
 </html>

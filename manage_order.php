@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
 
          nav {
             display: flex;
@@ -75,58 +73,61 @@
             color: #fff;
         }
     </style>
+
 </head>
 <body>
 
-
-        <nav>
+    <nav>
         <a href="index.php" class="active">รายการเข้าพัก</a>
         <a href="room.php">ห้องพัก</a>
         <a href="manage_order.php">จัดการเข้าพัก</a>
         </nav>
 
-
     <?php
         include "action/connect.php";
-        
-        //       ดึง   ทั้งหมด จาก ตาราง orders
         $sql = "SELECT * FROM orders";
-        //                      db.  คำสั่ง
         $result = mysqli_query($con, $sql);
-        // ทดสอบตัวแปร
-        // var_dump($result);
     ?>
 
-    <table border=1>
+<a href="add_order.php">เพิ่ม</a>
+        <table border=1>
         <thead>
-            <th>รหัสรายการ</th>
-            <th>ชื่อผู้เข้าพัก</th>
-            <th>ชำระเงิน</th>
-            <th>ขนาดอ่าง</th>
-            <th>ห้อง</th>
-            <th>ภาพ</th>
+        <th>รหัสรายการ</th>
+        <th>ชื่อผู้เข้าพัก</th>
+        <th>ชำระเงิน</th>
+        <th>ประเภท</th>
+        <th>ห้อง</th>
+        <th>ภาพ</th>
+        <th>จัดการ</th>
         </thead>
 
+<?php
+
+foreach($result as $order){
+?>
+    <tr>
+        <td><?= $order["order_id"] ?></td>
+        <td><?= $order["name"] ?></td>
+        <td><?= $order["payment"] ?></td>
+        <td><?= $order["usage_type"] ?></td>
+        <td><?= $order["room_id"] ?></td>
+        <td>
+             <img
+            src="<?= $order["image"] ?>"
+            style="width:200px"
+            >
+        </td>
+        <td>    
+            <!-- แก้ไข -->
+            <a href="edit_order.php?id=<?= $order["order_id"] ?>">แก้ไข</a>
+            <!-- ลบ -->
+            <a href="action/delete_order.php?id=<?=$order["order_id"]?>">ลบ</a>
+        </td>
+    </tr>
         <?php
-            foreach($result as $order){
-                ?>
-                <tr>
-                    <td><?= $order["order_id"] ?></td>
-                    <td><?= $order["name"] ?></td>
-                    <td><?= $order["payment"] ?></td>
-                    <td><?= $order["usage_type"] ?></td>
-                    <td><?= $order["room_id"] ?></td>
-                    <td>
-                        <img 
-                            src="<?= $order["image"] ?>"
-                            style="width:200px"
-                        >
-                    </td>
-                </tr>
-                <?php
-            }
-        ?>
-    </table>
-    <a href="room.php">Go room</a>
+    }
+?>
+</table>
+
 </body>
 </html>
